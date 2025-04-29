@@ -61,14 +61,14 @@ const allHeroesData: HeroProps[] = [
 
 const Heroes = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [rankFilter, setRankFilter] = useState("");
-  const [awardFilter, setAwardFilter] = useState("");
+  const [rankFilter, setRankFilter] = useState("all");
+  const [awardFilter, setAwardFilter] = useState("all");
 
   // Фильтрация героев
   const filteredHeroes = allHeroesData.filter(hero => {
     const matchesSearch = hero.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRank = rankFilter === "" || hero.rank === rankFilter;
-    const matchesAward = awardFilter === "" || hero.awards.includes(awardFilter);
+    const matchesRank = rankFilter === "all" || hero.rank === rankFilter;
+    const matchesAward = awardFilter === "all" || hero.awards.includes(awardFilter);
     return matchesSearch && matchesRank && matchesAward;
   });
 
@@ -114,7 +114,7 @@ const Heroes = () => {
                   <SelectValue placeholder="Фильтр по званию" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Все звания</SelectItem>
+                  <SelectItem value="all">Все звания</SelectItem>
                   {uniqueRanks.map(rank => (
                     <SelectItem key={rank} value={rank}>{rank}</SelectItem>
                   ))}
@@ -127,7 +127,7 @@ const Heroes = () => {
                   <SelectValue placeholder="Фильтр по наградам" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Все награды</SelectItem>
+                  <SelectItem value="all">Все награды</SelectItem>
                   {uniqueAwards.map(award => (
                     <SelectItem key={award} value={award}>{award}</SelectItem>
                   ))}
@@ -154,8 +154,8 @@ const Heroes = () => {
               <Button 
                 onClick={() => {
                   setSearchTerm("");
-                  setRankFilter("");
-                  setAwardFilter("");
+                  setRankFilter("all");
+                  setAwardFilter("all");
                 }}
               >
                 Сбросить фильтры
